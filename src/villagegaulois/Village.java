@@ -60,10 +60,11 @@ public class Village {
 	}
 	
 	public String installerVendeur(Gaulois vendeur, String produit,int nbProduit) {
+//		System.out.println(marche.trouverEtalLibre()+vendeur.getNom());
 		marche.utiliserEtal(marche.trouverEtalLibre(), vendeur, produit, nbProduit);
 		StringBuilder chainePresentation = new StringBuilder();
 		chainePresentation.append(String.format("%s  cherche un endroit pour vendre %s %d.\n", vendeur.getNom(),produit, nbProduit));
-		chainePresentation.append("Le vendeur "+ vendeur.getNom() +" vend des fleurs à l'étal n°"+ marche.trouverEtalLibre() +".\n");
+		chainePresentation.append("Le vendeur "+ vendeur.getNom() +" vend des fleurs ï¿½ l'ï¿½tal nï¿½"+ marche.trouverEtalLibre() +".\n");
 		return chainePresentation.toString();
 	}
 	
@@ -86,6 +87,10 @@ public class Village {
 		chaine.append(marche.trouverVendeur(vendeur).libererEtal());
 		return chaine.toString();
 	}
+	
+	public String afficherMarche() {
+		return marche.afficherMarche();
+	}
 
 	
 	private static class Marche {
@@ -105,7 +110,9 @@ public class Village {
 		
 		private int trouverEtalLibre() {
 			for (int i=0; i<etals.length; i++) {
+				System.out.println("test: "+ i);
 				if (! etals[i].isEtalOccupe()) {
+					System.out.println("in");
 					return i;
 				}
 			}
@@ -140,12 +147,15 @@ public class Village {
 			return null;
 		}
 		
-		private void afficherMarche() {
-			int i;
-			for (i=0; i<etals.length && etals[i].isEtalOccupe(); i++) {
-				etals[i].afficherEtal();
+		private String afficherMarche() {
+			int nbEtaldOcc;
+			StringBuilder chaine= new StringBuilder();
+			for (nbEtaldOcc=0; nbEtaldOcc<etals.length; nbEtaldOcc++) {
+				chaine.append(String.format("%s", etals[nbEtaldOcc].afficherEtal()));
+				
 			}
-			System.out.println("Il reste "+(etals.length-i)+" étals non utilisés dans le marché.\n");
+			chaine.append(String.format("Il reste %d Ã©tals non utilisÃ©s dans le marchÃ©.", etals.length-nbEtaldOcc));
+			return chaine.toString();
 		}
 	}
 	

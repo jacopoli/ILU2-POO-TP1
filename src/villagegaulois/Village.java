@@ -1,5 +1,7 @@
 package villagegaulois;
 
+import java.util.Iterator;
+
 import personnages.Chef;
 import personnages.Gaulois;
 
@@ -110,9 +112,7 @@ public class Village {
 		
 		private int trouverEtalLibre() {
 			for (int i=0; i<etals.length; i++) {
-				System.out.println("test: "+ i);
 				if (! etals[i].isEtalOccupe()) {
-					System.out.println("in");
 					return i;
 				}
 			}
@@ -135,6 +135,8 @@ public class Village {
 					iEtals++;
 				}
 			}
+			
+
 			return etalsUtilises; 
 		}
 		
@@ -148,13 +150,15 @@ public class Village {
 		}
 		
 		private String afficherMarche() {
-			int nbEtaldOcc;
+			int nbEtalsOcc=0;
 			StringBuilder chaine= new StringBuilder();
-			for (nbEtaldOcc=0; nbEtaldOcc<etals.length; nbEtaldOcc++) {
-				chaine.append(String.format("%s", etals[nbEtaldOcc].afficherEtal()));
-				
+			for (int i=0; i<etals.length; i++) {
+				if (etals[i].isEtalOccupe()) {
+					chaine.append(String.format("%s", etals[i].afficherEtal()));
+					nbEtalsOcc++;
+				}
 			}
-			chaine.append(String.format("Il reste %d étals non utilisés dans le marché.", etals.length-nbEtaldOcc));
+			chaine.append(String.format("Il reste %d étals non utilisés dans le marché.", etals.length-nbEtalsOcc));
 			return chaine.toString();
 		}
 	}
